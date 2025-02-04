@@ -1,4 +1,4 @@
-apiVersion: karpenter.sh/v1beta1
+apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
   name: amd-nvidia
@@ -6,14 +6,12 @@ spec:
   disruption:
     budgets:
     - nodes: 10%
-    consolidationPolicy: WhenUnderutilized
-    expireAfter: 720h
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 1m
   limits:
     cpu: 1000
   template:
     spec:
-      nodeClassRef:
-        name: amd-nvidia
       requirements:
       - key: kubernetes.io/arch
         operator: In
@@ -29,13 +27,21 @@ spec:
         operator: In
         values:
         - on-demand
+      expireAfter: 720h
+      nodeClassRef:
+        name: amd-nvidia
+        group: karpenter.k8s.aws  # Updated since only a single version will be served
+        kind: EC2NodeClass
+
 ---
-apiVersion: karpenter.k8s.aws/v1beta1
+apiVersion: karpenter.k8s.aws/v1
 kind: EC2NodeClass
 metadata:
   name: amd-nvidia
 spec:
   amiFamily: AL2 
+  amiSelectorTerms: 
+  - alias: al2@latest
   role: $KarpenterNodeRole
   subnetSelectorTerms:
     - tags:
