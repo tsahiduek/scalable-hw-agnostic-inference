@@ -1,12 +1,15 @@
 #!/bin/bash -x
 DLC_ECR_ACCOUNT="763104351884"
+echo ${AWS_REGION}
 
 DLC_NEURON_IMAGE="pytorch-inference-neuronx"
 DLC_NEURON_TAG=$BASE_IMAGE_TAG
-DLC_NEURON_ECR=$DLC_ECR_ACCOUNT".dkr.ecr.us-west-2.amazonaws.com"
+# DLC_NEURON_ECR=$DLC_ECR_ACCOUNT".dkr.ecr.us-west-2.amazonaws.com"
+DLC_NEURON_ECR=$DLC_ECR_ACCOUNT".dkr.ecr.${AWS_REGION}.amazonaws.com"
 if [ "$IMAGE_TAG" == "amd64-neuron" ]; then
   docker logout
-  aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $DLC_NEURON_ECR
+  # aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $DLC_NEURON_ECR
+  aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin $DLC_NEURON_ECR
   docker pull $DLC_NEURON_ECR/$DLC_NEURON_IMAGE:$DLC_NEURON_TAG
   dlc_xla_image_id=$(docker images | grep $DLC_ECR_ACCOUNT | grep $DLC_NEURON_IMAGE | awk '{print $3}')
   docker tag $dlc_xla_image_id $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$BASE_REPO:$DLC_NEURON_TAG

@@ -5,6 +5,7 @@
 ```bash
 export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
 export AWS_REGION=us-west-2
+export AWS_REGION=eu-west-1
 #export BASE_IMAGE_AMD_XLA_TAG=2.1.2-neuronx-py310-sdk2.20.2-ubuntu20.04
 export BASE_IMAGE_AMD_XLA_TAG=2.5.1-neuronx-py310-sdk2.21.0-ubuntu22.04
 export BASE_IMAGE_AMD_CUD_TAG=2.3.0-gpu-py311-cu121-ubuntu20.04-ec2
@@ -16,10 +17,14 @@ export BASE_REPO=model
 export BASE_TAG=multiarch-ubuntu
 export BASE_AMD_TAG=amd64
 export GITHUB_BRANCH=master
-export GITHUB_USER=yahavb
+# export GITHUB_USER=yahavb
+export GITHUB_USER=tsahiduek
 export GITHUB_REPO=scalable-hw-agnostic-inference
 export MODEL_DIR=sd2_compile_dir
 export CF_STACK=hw-agnostic-inference-cdk
+
+[ -z "$AWS_ACCOUNT_ID" -o -z "$AWS_REGION" -o -z "$BASE_IMAGE_AMD_XLA_TAG" -o -z "$BASE_IMAGE_AMD_CUD_TAG" -o -z "$BASE_IMAGE_ARM_CPU_TAG" -o -z "$IMAGE_AMD_XLA_TAG" -o -z "$IMAGE_AMD_CUD_TAG" -o -z "$IMAGE_ARM_CPU_TAG" -o -z "$BASE_REPO" -o -z "$BASE_TAG" -o -z "$BASE_AMD_TAG" -o -z "$GITHUB_BRANCH" -o -z "$GITHUB_USER" -o -z "$GITHUB_REPO" -o -z "$MODEL_DIR" -o -z "$CF_STACK" ] && echo "Missing required environment variables" && exit 1 || echo "All variables are set"
+
 ```
 * Install needed packages
 
