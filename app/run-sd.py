@@ -20,9 +20,10 @@ device=os.environ["DEVICE"]
 compiled_model_id=os.environ['COMPILED_MODEL_ID']
 num_inference_steps=int(os.environ['NUM_OF_RUNS_INF'])
 cw_namespace='hw-agnostic-infer'
-session = boto3.session.Session()
-region = session.region_name
-cloudwatch = boto3.client('cloudwatch', region_name=region)
+# session = boto3.session.Session()
+# region = session.region_name
+# print(f"region:{region}")
+cloudwatch = boto3.client('cloudwatch', region_name="us-west-2")
 def cw_pub_metric(metric_name,metric_value,metric_unit):
   response = cloudwatch.put_metric_data(
     Namespace=cw_namespace,

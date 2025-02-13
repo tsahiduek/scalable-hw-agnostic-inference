@@ -22,7 +22,7 @@ num_inference_steps=int(os.environ['NUM_OF_RUNS_INF'])
 cw_namespace='hw-agnostic-infer'
 session = boto3.session.Session()
 region = session.region_name
-cloudwatch = boto3.client('cloudwatch', region_name=region)
+cloudwatch = boto3.client('cloudwatch', region_name="us-west-2")
 
 def cw_pub_metric(metric_name,metric_value,metric_unit):
   response = cloudwatch.put_metric_data(

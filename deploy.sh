@@ -228,8 +228,8 @@ aws iam attach-role-policy \
         #         effect: NoSchedule
         #       - operator: "Exists"
 
-helm upgrade --install nvdp  https://nvidia.github.io/k8s-device-plugin/stable/nvidia-device-plugin-0.17.0.tgz \
   --repo https://nvidia.github.io/k8s-device-plugin \
+helm upgrade --install nvdp  https://nvidia.github.io/k8s-device-plugin/stable/nvidia-device-plugin-0.17.0.tgz \
   --namespace nvidia-device-plugin \
   --create-namespace \
   --set gfd.enabled=true \
