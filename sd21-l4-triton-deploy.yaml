@@ -36,7 +36,8 @@ spec:
           medium: Memory
       containers:
       - name: app
-        image: 891377065549.dkr.ecr.us-west-2.amazonaws.com/stablediffusion:amd64-cuda
+        # image: 891377065549.dkr.ecr.us-west-2.amazonaws.com/stablediffusion:amd64-cuda
+        image: 481121494044.dkr.ecr.eu-west-1.amazonaws.com/model:amd64-cuda
         imagePullPolicy: Always
         volumeMounts:
           - mountPath: /dev/shm
